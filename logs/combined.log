@@ -1,0 +1,8 @@
+{"error":"Unknown column &#x27;asal_sekolah&#x27; in &#x27;field list&#x27;","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 20:51:25","type":"REGISTRATION_ERROR"}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 20:54:30","type":"REGISTRATION_SUCCESS","userId":1}
+{"error":"Unknown column &#x27;User.isActive&#x27; in &#x27;where clause&#x27;","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 20:54:51","type":"LOGIN_ERROR"}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 20:59:09","type":"REGISTRATION_SUCCESS","userId":1}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 20:59:14","type":"LOGIN_PASSWORD_MISMATCH","userId":1}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 21:00:04","type":"REGISTRATION_DUPLICATE_EMAIL"}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 21:00:11","type":"LOGIN_PASSWORD_MISMATCH","userId":1}
+{"email":"peserta3@gmail.com","level":"warn","message":"Security Event","service":"user-service","timestamp":"2025-03-26 21:00:21","type":"LOGIN_PASSWORD_MISMATCH","userId":1}
