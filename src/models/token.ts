@@ -1,7 +1,7 @@
 import sequelize from "sequelize";
-import User from "../models/user";
 import { db } from "../config/database";
 import { DataTypes, Model } from "sequelize";
+import User from "./user";
 
 class Token extends Model {
   public id!: number;

@@ -43,7 +43,12 @@ class AuthController {
                     status: 'success',
                     message: 'Pengguna berhasil didaftarkan, tetapi belum aktif.',
                     data: {
-                        user
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        phone_number: user.phone_number,
+                        asal_sekolah: user.asal_sekolah,
+                        isActive: user.isActive
                     }
                 });
             }
@@ -78,7 +83,10 @@ class AuthController {
                         user: {
                             id: loginResult.user.id,
                             name: loginResult.user.name,
-                            email: loginResult.user.email
+                            email: loginResult.user.email,
+                            phone_number: loginResult.user.phone_number,
+                            asal_sekolah: loginResult.user.asal_sekolah,
+                            isActive: loginResult.user.isActive
                         },
                         tokens: {
                             accessToken: loginResult.accessToken,

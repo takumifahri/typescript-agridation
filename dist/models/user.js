@@ -13,7 +13,6 @@ const sequelize_1 = require("sequelize");
 const HashPassword_1 = require("../utils/HashPassword"); // Import fungsi hash
 const database_1 = require("../config/database");
 class User extends sequelize_1.Model {
-    // Membandingkan password saat login
     isPasswordValid(password) {
         return __awaiter(this, void 0, void 0, function* () {
             return (0, HashPassword_1.comparePassword)(password, this.password);
@@ -21,46 +20,16 @@ class User extends sequelize_1.Model {
     }
 }
 User.init({
-    id: {
-        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    name: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    password: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    phone_number: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: true,
-    },
-    asal_sekolah: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    email_verified_at: {
-        type: sequelize_1.DataTypes.DATE,
-        allowNull: true,
-    },
-    isActive: {
-        type: sequelize_1.DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false, // Default to true for active users
-    },
-    role: {
-        type: sequelize_1.DataTypes.ENUM("peserta", "juri", "admin"),
-        allowNull: false,
-        defaultValue: "peserta",
-    }
+    id: { type: sequelize_1.DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
+    name: { type: sequelize_1.DataTypes.STRING, allowNull: false },
+    email: { type: sequelize_1.DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: sequelize_1.DataTypes.STRING, allowNull: false },
+    phone_number: { type: sequelize_1.DataTypes.STRING, allowNull: true },
+    asal_sekolah: { type: sequelize_1.DataTypes.STRING, allowNull: false },
+    email_verified_at: { type: sequelize_1.DataTypes.DATE, allowNull: true },
+    isActive: { type: sequelize_1.DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    role: { type: sequelize_1.DataTypes.ENUM("peserta", "juri", "admin"), allowNull: false, defaultValue: "peserta" },
+    teamId: { type: sequelize_1.DataTypes.INTEGER.UNSIGNED, allowNull: true, references: { model: "teams", key: "id" } },
 }, {
     sequelize: database_1.db,
     tableName: "users",

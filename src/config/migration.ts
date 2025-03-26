@@ -1,40 +1,58 @@
-import { db } from "./database";
-import User from "../models/user";
+import { db } from "../config/database";
 import Token from "../models/token";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import User from "../models/user";
+import TeamList from "../models/List_Team";
+import Penilaian from "../models/Penilaian";
+import MasterLombaList from "../models/Master_Lomba";
 
 dotenv.config();
 
-
-const syncDatabase = async() => {
-    try{
-
+const syncDatabase = async () => {
+    try {
         await db.authenticate();
-        console.log("Database connected!");
+        console.log("✅ Database connected!");
 
-        // Drop Token table first to avoid foreign key constraint issues
+        // Hapus tabel dalam urutan dari yang paling dependent ke yang paling independen
+        await Penilaian.drop();
+        console.log("🗑 Dropped 'penilaians' table.");
+
         await Token.drop();
-        console.log("Dropped 'tokens' table.");
+        console.log("🗑 Dropped 'tokens' table.");
 
-        // Drop User table after Token
         await User.drop();
-        console.log("Dropped 'users' table.");
+        console.log("🗑 Dropped 'users' table.");
 
-        // Sync User first to ensure the users table exists
+        await TeamList.drop();
+        console.log("🗑 Dropped 'teams' table.");
+
+        await MasterLombaList.drop();
+        console.log("🗑 Dropped 'master_lombas' table.");
+
+        console.log("\n🔄 Syncing tables...\n");
+
+        // Sinkronkan dalam urutan yang benar
+        await MasterLombaList.sync({ force: true });
+        console.log("✅ Synchronized 'master_lombas' table.");
+
+        await TeamList.sync({ force: true });
+        console.log("✅ Synchronized 'teams' table.");
+
         await User.sync({ force: true });
-        console.log("Synchronized 'users' table.");
+        console.log("✅ Synchronized 'users' table.");
 
-        // Then sync Token to ensure the foreign key constraint is valid
         await Token.sync({ force: true });
-        console.log("Synchronized 'tokens' table.");
+        console.log("✅ Synchronized 'tokens' table.");
 
-        console.log("All models were synchronized successfully.");  
+        await Penilaian.sync({ force: true });
+        console.log("✅ Synchronized 'penilaians' table.");
+
+        console.log("\n🚀 All models were synchronized successfully!");
         process.exit();
-
-    }catch(err){
+    } catch (err) {
         console.error("Failed to sync database:", err);
         process.exit(1);
     }
-}
+};
 
 syncDatabase();

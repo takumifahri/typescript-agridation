@@ -12,10 +12,10 @@ class User extends Model {
   public asal_sekolah!: string;
   public email_verified_at?: Date;
   public isActive!: boolean;
+  public teamId?: number;
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  // Membandingkan password saat login
   public async isPasswordValid(password: string): Promise<boolean> {
     return comparePassword(password, this.password);
   }
@@ -23,49 +23,19 @@ class User extends Model {
 
 User.init(
   {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true,
-    },
-    password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    phone_number: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    asal_sekolah: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email_verified_at: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    isActive: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false, // Default to true for active users
-    },
-    role:{
-      type: DataTypes.ENUM("peserta", "juri", "admin"),
-      allowNull: false,
-      defaultValue: "peserta",
-    }
+    id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    email: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false },
+    phone_number: { type: DataTypes.STRING, allowNull: true },
+    asal_sekolah: { type: DataTypes.STRING, allowNull: false },
+    email_verified_at: { type: DataTypes.DATE, allowNull: true },
+    isActive: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+    role: { type: DataTypes.ENUM("peserta", "juri", "admin"), allowNull: false, defaultValue: "peserta" },
+    teamId: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true, references: { model: "teams", key: "id" } },
   },
   {
-    sequelize: db,
+    sequelize:db,
     tableName: "users",
     timestamps: true,
     hooks: {

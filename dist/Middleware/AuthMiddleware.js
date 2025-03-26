@@ -95,5 +95,35 @@ class AuthMiddleware {
             }
         });
     }
+    static Penilaian(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                // Pastikan pengguna sudah terautentikasi
+                if (req.user) {
+                    if (req.user.role === 'juri') {
+                        next();
+                    }
+                    else {
+                        return res.status(403).json({
+                            status: 'error',
+                            message: 'Akses ditolak'
+                        });
+                    }
+                }
+                else {
+                    return res.status(401).json({
+                        status: 'error',
+                        message: 'Tidak terautentikasi'
+                    });
+                }
+            }
+            catch (error) {
+                res.status(500).json({
+                    status: 'error',
+                    message: 'Kesalahan server'
+                });
+            }
+        });
+    }
 }
 exports.AuthMiddleware = AuthMiddleware;

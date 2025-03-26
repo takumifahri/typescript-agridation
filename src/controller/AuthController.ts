@@ -44,7 +44,12 @@ export class AuthController {
         status: 'success',
         message: 'Pengguna berhasil didaftarkan, tetapi belum aktif.',
         data: {
-          user
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            phone_number: user.phone_number,
+            asal_sekolah: user.asal_sekolah,
+            isActive: user.isActive
         }
       });
     } catch (error: any) {
@@ -73,21 +78,24 @@ export class AuthController {
       // Proses login
       const loginResult = await this.authService.login(email, password);
   
-      res.status(200).json({
-        status: 'success',
-        message: loginResult.message, // Ambil pesan dari loginResult
-        data: {
-          user: {
+    res.status(200).json({
+      status: 'success',
+      message: loginResult.message, // Ambil pesan dari loginResult
+      data: {
+        user: {
             id: loginResult.user.id,
             name: loginResult.user.name,
-            email: loginResult.user.email
-          },
-          tokens: {
+            email: loginResult.user.email,
+            phone_number: loginResult.user.phone_number,
+            asal_sekolah: loginResult.user.asal_sekolah,
+            isActive: loginResult.user.isActive
+        },
+        tokens: {
             accessToken: loginResult.accessToken,
             refreshToken: loginResult.refreshToken
-          }
         }
-      });
+      }
+    });
     } catch (error: any) {
       res.status(error.statusCode || 500).json({
         status: 'error',
